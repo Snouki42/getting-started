@@ -3,6 +3,12 @@
 FROM --platform=$BUILDPLATFORM python:alpine AS base
 WORKDIR /app
 COPY requirements.txt .
+
+# Installer les dépendances nécessaires pour Alpine
+RUN apk add --no-cache python3-dev py3-pip build-base
+
+# Mettre à jour pip
+RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 FROM --platform=$BUILDPLATFORM node:18-alpine AS app-base
